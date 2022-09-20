@@ -21,7 +21,9 @@ class BERTDataset:
             None,
             add_special_tokens=True,
             max_length=self.max_len,
-            pad_to_max_length='max_length'
+            truncation=True,
+            padding='max_length',
+            # pad_to_max_length='max_length'
         )
 
         ids = inputs["input_ids"]

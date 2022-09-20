@@ -34,7 +34,7 @@ def train_fn(data_loader, model, optimizer, device, scheduler):
         scheduler.step()
 
 
-def eval_fn(data_loader, model, device):
+def valid_fn(data_loader, model, device):
     model.eval()
     fin_targets = []
     fin_outputs = []

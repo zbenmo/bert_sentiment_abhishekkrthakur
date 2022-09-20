@@ -23,6 +23,9 @@ def run():
         stratify=dfx.sentiment.values
     )
 
+    df_train = df_train[:400]
+    df_valid = df_valid[:100]
+
     df_train = df_train.reset_index(drop=True)
     df_valid = df_valid.reset_index(drop=True)
 
@@ -34,7 +37,7 @@ def run():
     train_data_loader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=config.TRAIN_BATCH_SIZE,
-        num_workers=4
+        num_workers=0 # 4
     )
 
     valid_dataset = dataset.BERTDataset(
@@ -45,7 +48,7 @@ def run():
     valid_data_loader = torch.utils.data.DataLoader(
         valid_dataset,
         batch_size=config.VALID_BATCH_SIZE,
-        num_workers=1
+        num_workers=0 # 1
     )
 
     device = torch.device("cpu")
@@ -77,7 +80,7 @@ def run():
         num_training_steps=num_train_steps
     )
 
-    model = nn.DataParallel(model)
+    # model = nn.DataParallel(model)
     best_accuracy = 0
     for epoch in range(config.EPOCHS):
         engine.train_fn(train_data_loader, model, optimizer, device, scheduler)
